@@ -69,3 +69,32 @@ main { display: grid; grid-template-columns: 230px minmax(0, 1fr); min-height: c
   .actions { top: 0; }
   .grid { grid-template-columns: repeat(auto-fill, minmax(110px, 1fr)); }
 }
+
+/* Biomes */
+main[hidden] { display: none; }
+.heading { font-size: 14px; font-weight: 650; margin: 0; }
+.row { display: flex; gap: 8px; }
+.fields { display: flex; flex-direction: column; gap: 10px; }
+.fields .group { text-transform: uppercase; letter-spacing: 0.06em; font-size: 11px; color: var(--muted); border-top: 1px solid var(--line); padding-top: 10px; }
+.fields label span { display: flex; justify-content: space-between; gap: 8px; }
+.fields label b { color: var(--text); font-weight: 600; white-space: nowrap; }
+.fields input[type="range"] { padding: 0; accent-color: var(--accent); }
+.role { margin-bottom: 22px; }
+.role-head { display: flex; align-items: baseline; gap: 12px; margin-bottom: 8px; }
+.role-head .spacer, .picker-top .spacer { flex: 1; }
+.grid.strip { grid-template-columns: repeat(auto-fill, minmax(112px, 1fr)); }
+.grid.strip .card .meta { font-size: 10.5px; }
+.card.missing { border-color: var(--bad); }
+.empty { padding: 14px 0; }
+.actions.static { position: static; padding-top: 10px; }
+.previews { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 12px; margin-top: 12px; }
+.previews figure { margin: 0; }
+.previews img { width: 100%; border-radius: 8px; display: block; background: #0e1012; }
+.lines { background: var(--panel); border: 1px solid var(--line); border-radius: 6px; padding: 10px; font-size: 11.5px; white-space: pre-wrap; overflow-wrap: anywhere; }
+dialog#picker { width: min(1100px, 94vw); height: min(760px, 90vh); background: var(--bg); color: var(--text); border: 1px solid var(--line); border-radius: 10px; padding: 0; }
+dialog#picker::backdrop { background: rgba(0, 0, 0, 0.6); }
+.picker-top { display: flex; align-items: center; gap: 12px; padding: 12px 14px; border-bottom: 1px solid var(--line); position: sticky; top: 0; background: var(--panel); z-index: 2; }
+.picker-top input[type="search"] { width: 220px; }
+.picker-top .inline { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; white-space: nowrap; }
+.picker-top .inline input { width: auto; }
+#picker-grid { padding: 14px; }

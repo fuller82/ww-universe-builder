@@ -10,8 +10,8 @@
   <header class="top">
     <div class="brand">Universe Builder <span class="engine">Unreal</span></div>
     <nav class="sections">
-      <button class="section current" type="button">Assets</button>
-      <button class="section" type="button" disabled title="Not built yet">Biomes</button>
+      <button class="section current" type="button" data-section="assets">Assets</button>
+      <button class="section" type="button" data-section="biomes">Biomes</button>
       <button class="section" type="button" disabled title="Not built yet">Biome drawer</button>
       <button class="section" type="button" disabled title="Not built yet">World</button>
     </nav>
@@ -21,7 +21,7 @@
     </div>
   </header>
 
-  <main>
+  <main id="section-assets">
     <aside class="filters">
       <label>Search
         <input id="search" type="search" placeholder="name or folder" autocomplete="off">
@@ -63,6 +63,51 @@
       <div id="grid" class="grid"></div>
     </section>
   </main>
+
+  <main id="section-biomes" hidden>
+    <aside class="filters">
+      <label>Biome
+        <select id="biome"></select>
+      </label>
+      <div id="biome-fields" class="fields"></div>
+      <div class="row">
+        <button id="biome-save" type="button" class="good" disabled>Save</button>
+        <button id="biome-revert" type="button" disabled>Revert</button>
+      </div>
+      <div id="biome-state" class="muted small"></div>
+    </aside>
+
+    <section class="content">
+      <div id="biome-message" class="message" hidden></div>
+      <div id="biome-roles"></div>
+
+      <h2 class="heading">Preview</h2>
+      <div class="actions static">
+        <label class="inline">Look
+          <select id="preview-look"></select>
+        </label>
+        <button id="preview-run" type="button">Build and render in Unreal</button>
+        <span id="preview-state" class="muted"></span>
+      </div>
+      <p class="muted small">A preview builds the 1 km test world from the saved file and renders three views. It takes about a minute and uses the graphics card; one runs at a time.</p>
+      <div id="preview-images" class="previews"></div>
+      <pre id="preview-lines" class="lines" hidden></pre>
+    </section>
+
+    <dialog id="picker">
+      <div class="picker-top">
+        <strong id="picker-title"></strong>
+        <input id="picker-search" type="search" placeholder="name or pack" autocomplete="off">
+        <label class="inline"><input id="picker-approved" type="checkbox"> approved only</label>
+        <label class="inline"><input id="picker-any-role" type="checkbox"> any role</label>
+        <span class="spacer"></span>
+        <button id="picker-close" type="button">Done</button>
+      </div>
+      <div id="picker-grid" class="grid"></div>
+    </dialog>
+  </main>
+
   <script type="module" src="app.js"></script>
+  <script type="module" src="biomes.js"></script>
 </body>
 </html>
