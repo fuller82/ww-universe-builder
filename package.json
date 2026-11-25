@@ -1,0 +1,9 @@
+{
+  "name": "ww-universe-builder",
+  "private": true,
+  "type": "module",
+  "description": "Universe Builder for Whispering Worlds on Unreal: edits data, Unreal builds and judges.",
+  "scripts": {
+    "start": "node server.mjs"
+  }
+}

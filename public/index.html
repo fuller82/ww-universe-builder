@@ -1,0 +1,68 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Universe Builder</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <div class="brand">Universe Builder <span class="engine">Unreal</span></div>
+    <nav class="sections">
+      <button class="section current" type="button">Assets</button>
+      <button class="section" type="button" disabled title="Not built yet">Biomes</button>
+      <button class="section" type="button" disabled title="Not built yet">Biome drawer</button>
+      <button class="section" type="button" disabled title="Not built yet">World</button>
+    </nav>
+    <div class="top-right">
+      <span id="generated" class="muted"></span>
+      <button id="refresh" type="button">Refresh from Unreal</button>
+    </div>
+  </header>
+
+  <main>
+    <aside class="filters">
+      <label>Search
+        <input id="search" type="search" placeholder="name or folder" autocomplete="off">
+      </label>
+      <label>Pack
+        <select id="pack"></select>
+      </label>
+      <label>Role
+        <select id="role"></select>
+      </label>
+      <label>Review
+        <select id="status"></select>
+      </label>
+      <label>Sort
+        <select id="sort">
+          <option value="name">Name</option>
+          <option value="height">Height, tallest first</option>
+          <option value="triangles">Triangles, most first</option>
+        </select>
+      </label>
+      <div id="summary" class="summary"></div>
+      <p class="muted small">A dimmed role is Unreal's guess from the file name. Set a role to make it yours; only approved assets will be offered to the biome builder.</p>
+    </aside>
+
+    <section class="content">
+      <div class="actions" id="actions">
+        <span id="count" class="muted"></span>
+        <span class="spacer"></span>
+        <button id="select-all" type="button">Select shown</button>
+        <button id="select-none" type="button">Clear selection</button>
+        <label class="inline">Set role
+          <select id="set-role"></select>
+        </label>
+        <button id="approve" type="button" class="good">Approve</button>
+        <button id="reject" type="button" class="bad">Reject</button>
+        <button id="unreview" type="button">Mark unreviewed</button>
+      </div>
+      <div id="message" class="message" hidden></div>
+      <div id="grid" class="grid"></div>
+    </section>
+  </main>
+  <script type="module" src="app.js"></script>
+</body>
+</html>
