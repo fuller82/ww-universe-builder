@@ -39,12 +39,30 @@ function send(res, status, body, type = 'application/json; charset=utf-8') {
   res.end(data);
 }
 
+function tokenMatches(text) {
+  const given = Buffer.from(text || '');
+  const want = Buffer.from(config.token);
+  return given.length === want.length && timingSafeEqual(given, want);
+}
+
+// A bearer header (agents, scripts) or the cookie the sign-in sets (the page, and its images, which cannot send a header).
 function authorised(req) {
   if (!config.token) return true;
   const header = req.headers.authorization || '';
-  const given = Buffer.from(header.startsWith('Bearer ') ? header.slice(7) : '');
-  const want = Buffer.from(config.token);
-  return given.length === want.length && timingSafeEqual(given, want);
+  if (header.startsWith('Bearer ') && tokenMatches(header.slice(7))) return true;
+  const cookie = /(?:^|;\s*)ub_token=([^;]+)/.exec(req.headers.cookie || '');
+  return Boolean(cookie) && tokenMatches(decodeURIComponent(cookie[1]));
+}
+
+// Sign-in: a slow answer on a wrong token, and a cookie scripts cannot read on a right one.
+async function login(req, res) {
+  const body = await readBody(req, 4096);
+  if (!config.token || !tokenMatches(`${body.token || ''}`)) {
+    await new Promise((resolve) => setTimeout(resolve, 800));
+    return send(res, 401, { ok: false, code: 'unauthorized', error: 'That token is not right.' });
+  }
+  res.writeHead(200, { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', 'Set-Cookie': `ub_token=${encodeURIComponent(config.token)}; HttpOnly; SameSite=Strict; Path=/; Max-Age=2592000` });
+  res.end(JSON.stringify({ ok: true }));
 }
 
 async function readJson(file, fallback) {
@@ -172,6 +190,7 @@ const server = http.createServer(async (req, res) => {
   try {
     const url = new URL(req.url, 'http://local');
     const route = `${req.method} ${url.pathname}`;
+    if (route === 'POST /api/login') return login(req, res);
     if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/thumbs/')) {
       if (!authorised(req)) return send(res, 401, { ok: false, code: 'unauthorized', error: 'Bearer token required.' });
     }
