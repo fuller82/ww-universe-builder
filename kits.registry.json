@@ -41,14 +41,14 @@
     "Universal Animation Library[Source].zip": {
       "title": "Universal Animation Library 1", "maker": "Quaternius", "source": "itch.io / quaternius.com",
       "licence": "CC0 (public domain): may be committed and shipped.",
-      "status": "downloaded",
-      "use": "120 hand-keyed clips on one rig with an Unreal setup: locomotion, roll, jumps, sword attacks, hits. The old Godot game's locomotion, roll and backstep came from this library."
+      "status": "in-use", "unreal": "/Game/WW/Anim/UAL/Manny",
+      "use": "120 hand-keyed clips on Unreal's bone names: locomotion, roll, jumps, sword attacks, hits. Retargeted cleanly (Tools/ue/import_ual.py); the controller's roll, sprint loop and jump air/landing are these."
     },
     "Universal Animation Library 2[Source].zip": {
       "title": "Universal Animation Library 2", "maker": "Quaternius", "source": "itch.io / quaternius.com",
       "licence": "CC0 (public domain): may be committed and shipped.",
-      "status": "downloaded",
-      "use": "134 more clips on the same rig as library 1."
+      "status": "in-unreal", "unreal": "/Game/WW/Anim/UAL/Manny",
+      "use": "134 more clips on the same rig: sword light/regular/heavy combos A-D with recoveries, slide, climb-ups, farming, mining, fishing. Retargeted, not used yet."
     },
     "Universal Base Characters[Source].zip": {
       "title": "Universal Base Characters", "maker": "Quaternius", "source": "itch.io / quaternius.com",
