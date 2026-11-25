@@ -8,6 +8,7 @@ import { createReadStream } from 'node:fs';
 import { spawn } from 'node:child_process';
 import { timingSafeEqual } from 'node:crypto';
 import { createBiomes } from './biomes.mjs';
+import { createKits } from './kits.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const config = {
@@ -22,6 +23,7 @@ config.thumbs = path.join(config.project, 'Saved', 'Catalog', 'thumbs');
 config.roles = path.join(config.project, 'Config', 'Assets', 'roles.json');
 
 const biomes = createBiomes(config);
+const kits = createKits(config, here);
 
 const isLoopback =['127.0.0.1', 'localhost', '::1'].includes(config.host);
 if (!isLoopback && !config.token) {
@@ -196,6 +198,7 @@ const server = http.createServer(async (req, res) => {
     }
     if (url.pathname.startsWith('/previews/') && !authorised(req)) return send(res, 401, { ok: false, code: 'unauthorized', error: 'Bearer token required.' });
     if (await biomes(req, res, url, send, readBody, serveFile)) return;
+    if (await kits(req, res, url, send)) return;
     if (route === 'GET /api/catalog') return send(res, 200, await catalogue());
     if (route === 'PUT /api/assets/role') return send(res, 200, await setRoles(await readBody(req)));
     if (route === 'POST /api/catalog/refresh') {

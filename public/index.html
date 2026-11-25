@@ -12,6 +12,7 @@
     <nav class="sections">
       <button class="section current" type="button" data-section="assets">Assets</button>
       <button class="section" type="button" data-section="biomes">Biomes</button>
+      <button class="section" type="button" data-section="kits">Kits</button>
       <button class="section" type="button" disabled title="Not built yet">Biome drawer</button>
       <button class="section" type="button" disabled title="Not built yet">World</button>
     </nav>
@@ -107,8 +108,18 @@
     </dialog>
   </main>
 
+  <main id="section-kits" class="kits-page" hidden>
+    <div class="kits-top">
+      <button id="kits-scan" type="button">Read the archives</button>
+      <span id="kits-scanned" class="muted small"></span>
+    </div>
+    <div id="kits-totals" class="kits-totals"></div>
+    <div id="kits-list" class="kits-list"></div>
+  </main>
+
   <script src="auth.js"></script>
   <script type="module" src="app.js"></script>
   <script type="module" src="biomes.js"></script>
+  <script type="module" src="kits.js"></script>
 </body>
 </html>

@@ -98,3 +98,21 @@ dialog#picker::backdrop { background: rgba(0, 0, 0, 0.6); }
 .picker-top .inline { display: flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; white-space: nowrap; }
 .picker-top .inline input { width: auto; }
 #picker-grid { padding: 14px; }
+.kits-page { padding: 16px; max-width: 1200px; }
+.kits-top { display: flex; align-items: center; gap: 12px; margin-bottom: 12px; }
+.kits-totals { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-bottom: 14px; }
+.kits-totals .summary-row { font-weight: 500; margin-right: 8px; }
+.use-filter { font-size: 12px; }
+.use-filter.current { border-color: var(--accent); color: var(--accent); }
+.kits-list { display: grid; grid-template-columns: repeat(auto-fill, minmax(420px, 1fr)); gap: 12px; align-items: start; }
+.kit { background: var(--panel); border: 1px solid var(--line); border-radius: 8px; padding: 12px; display: flex; flex-direction: column; gap: 6px; }
+.kit-head { display: flex; align-items: baseline; gap: 8px; flex-wrap: wrap; }
+.kit-title { font-weight: 500; flex: 1; }
+.kit-status, .kit-kind { font-size: 11px; padding: 1px 7px; border-radius: 10px; border: 1px solid var(--line); color: var(--muted); }
+.kit-status.status-in-use { color: var(--accent); border-color: var(--accent); }
+.kit-status.status-in-unreal { color: var(--text); }
+.kit-use { font-size: 13px; line-height: 1.45; }
+.kit-toggle { align-self: start; font-size: 12px; }
+.clip-use { font-size: 12px; font-weight: 500; margin-top: 6px; }
+.clip-names { font-size: 11.5px; line-height: 1.5; color: var(--muted); overflow-wrap: anywhere; }
+.kit .error { color: var(--bad); }

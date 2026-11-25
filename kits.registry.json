@@ -1,0 +1,114 @@
+{
+  "schema": "ww-kits-registry/1",
+  "note": "What a file listing cannot know about each downloaded kit: who made it, the licence in one line, what we would use it for, and where it stands in the Unreal project. Keyed by archive file name. Statuses: downloaded, in-unreal, in-use, parked.",
+  "kits": {
+    "SwordShieldAnimBundle 5.5.zip": {
+      "title": "Sword and Shield Animation Bundle V1-V3", "maker": "GameDevHero", "source": "itch.io (bought)",
+      "licence": "Paid: use in games, no redistribution. Out of git.",
+      "status": "in-use", "unreal": "/Game/SwordAndShieldAnimationBundle",
+      "use": "Current combo, heavy, dodges and sword stance loops. Motion-capture style; the operator finds it too technical (2026-11-25)."
+    },
+    "Archery Combat Animation V1 FBX_UE.zip": {
+      "title": "Archery (Bow) Combat Animation V1", "maker": "GameDevHero", "source": "itch.io (bought)",
+      "licence": "Paid: use in games, no redistribution. Out of git.",
+      "status": "in-unreal", "unreal": "/Game/WW/Anim/GDH_Archery",
+      "use": "Bow moveset, when ranged combat is built. 316 clips imported cleanly."
+    },
+    "medieval-combat-animation-pack-pack.zip": {
+      "title": "Medieval Combat Animation Pack 1.0", "maker": "Hadukis", "source": "itch.io (bought)",
+      "licence": "Use, edit, retarget and ship; no redistribution of the files. Out of git.",
+      "status": "in-unreal", "unreal": "/Game/WW/Anim/Medieval/Manny/Combat",
+      "use": "Best candidate for the sword moveset: quick attacks A/B/C with recovers, guard, dodges in four directions, sidesteps, a forward roll, hit reactions, deaths. Retargeted to Unreal's mannequin; hip height still comes out wrong (open)."
+    },
+    "medieval-animation-pack-pack.zip": {
+      "title": "Medieval Animation Pack 2.3", "maker": "Hadukis", "source": "itch.io (bought)",
+      "licence": "Use, edit, retarget and ship; no redistribution. Locomotion clips are adapted from the 100STYLE dataset (CC BY 4.0: credit required). Out of git.",
+      "status": "in-unreal", "unreal": "/Game/WW/Anim/Medieval/Manny/Base",
+      "use": "Jump start/air/land, sprint, run, strafes, crouch and sneak, sword-and-shield set, two-handed, spear, archery, daily-life actions. Locomotion and sword-and-shield folders retargeted; the rest not yet."
+    },
+    "medieval-npc-animation-pack-pack.zip": {
+      "title": "Medieval NPC Animation Pack 1.2", "maker": "Hadukis", "source": "itch.io (bought)",
+      "licence": "Use, edit, retarget and ship; no redistribution. Out of git.",
+      "status": "downloaded",
+      "use": "Townsfolk and NPC behaviour for settlements. Not needed until NPCs exist."
+    },
+    "medieval-weapons-pack-pack.zip": {
+      "title": "Medieval Weapons Pack 1.0", "maker": "Hadukis", "source": "itch.io (bought)",
+      "licence": "Use and ship; no redistribution. Out of git.",
+      "status": "downloaded",
+      "use": "19 weapons (swords, shields, spears, staff) with a grips.json that says how each sits in the hand, made to match the Hadukis clips. Should replace the sword pack's demo sword and shield."
+    },
+    "Universal Animation Library[Source].zip": {
+      "title": "Universal Animation Library 1", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "120 hand-keyed clips on one rig with an Unreal setup: locomotion, roll, jumps, sword attacks, hits. The old Godot game's locomotion, roll and backstep came from this library."
+    },
+    "Universal Animation Library 2[Source].zip": {
+      "title": "Universal Animation Library 2", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "134 more clips on the same rig as library 1."
+    },
+    "Universal Base Characters[Source].zip": {
+      "title": "Universal Base Characters", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "Base bodies and hairstyles on the Universal Animation Library rig: a player character that is ours to ship, in place of Epic's mannequin."
+    },
+    "Modular Character Outfits - Fantasy[Source].zip": {
+      "title": "Modular Character Outfits - Fantasy", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "Outfit pieces for the base characters: armour and clothing for the player and NPCs."
+    },
+    "Fantasy Props MegaKit[Source].zip": {
+      "title": "Fantasy Props MegaKit", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "211 props (workbenches, furniture, tools) for settlements and interiors."
+    },
+    "Medieval Village MegaKit[Source].zip": {
+      "title": "Medieval Village MegaKit", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "About 300 modular building pieces (walls, windows, roofs) with collisions: settlements for the biome drawer's settlement zones."
+    },
+    "Stylized Nature MegaKit[Source].zip": {
+      "title": "Stylized Nature MegaKit", "maker": "Quaternius", "source": "itch.io / quaternius.com",
+      "licence": "CC0 (public domain): may be committed and shipped.",
+      "status": "downloaded",
+      "use": "116 trees, rocks and plants: Meadows vegetation that can live in git, unlike the Fab packs."
+    },
+    "Viking World - Stylized Environment.zip": {
+      "title": "Viking World - Stylized Environment", "maker": "not read yet", "source": "itch.io",
+      "licence": "No licence file found in the archive: check the store page before shipping.",
+      "status": "downloaded",
+      "use": "About 360 environment meshes with textures and three assembled buildings."
+    },
+    "Stylized+Medieval+Village+URP_2022.3.6f1.unitypackage": {
+      "title": "Stylized Medieval Village (Unity URP package)", "maker": "not read yet", "source": "itch.io",
+      "licence": "No licence file found in the archive.",
+      "status": "parked",
+      "use": "A Unity package: meshes and textures would have to be pulled out by hand. Park unless something in it is needed."
+    },
+    "Village (Blender 4.2.2).zip": {
+      "title": "Village (Blender source)", "maker": "not read yet", "source": "itch.io",
+      "licence": "No licence file found in the archive.",
+      "status": "downloaded",
+      "use": "33 Blender files of village pieces; export through Blender when needed."
+    },
+    "Forest (Blender 4.2.2).zip": {
+      "title": "Forest (Blender source)", "maker": "not read yet", "source": "itch.io",
+      "licence": "No licence file found in the archive.",
+      "status": "downloaded",
+      "use": "18 Blender files of forest pieces; textures are in the Forest (Textures) archive."
+    },
+    "Forest (Textures).zip": {
+      "title": "Forest (textures)", "maker": "not read yet", "source": "itch.io",
+      "licence": "No licence file found in the archive.",
+      "status": "downloaded",
+      "use": "37 textures for the Forest Blender files."
+    }
+  }
+}
