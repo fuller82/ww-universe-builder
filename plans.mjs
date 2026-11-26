@@ -9,7 +9,9 @@ import { createHash } from 'node:crypto';
 
 const ID = /^[a-z0-9][a-z0-9-]{0,47}$/;
 const FEATURE_ID = /^[a-z0-9-]{1,48}$/;
-const VIEWS = ['overview', 'spawn', 'way-up', 'shelf', 'viewpoint', 'summit'];
+// The build names its own views for each drawing (probe wwPlanViews); these come first when present, the rest follow by name.
+const VIEWS = ['overview', 'spawn', 'climb', 'way-up', 'shelf', 'river', 'site', 'viewpoint', 'summit'];
+const VIEW_NAME = /^[a-z0-9][a-z0-9-]{0,40}$/;
 const MOST_POINTS = 8192;
 const MOST_PROBLEMS = 200;
 
@@ -315,7 +317,8 @@ export function createPlans(config, { looks, run = spawn }) {
       if (done) return;
       done = true;
       const images = [];
-      for (const view of VIEWS) {
+      const found = (await readdir(views).catch(() => [])).filter((name) => name.endsWith('.png') && VIEW_NAME.test(name.slice(0, -4))).map((name) => name.slice(0, -4)).sort();
+      for (const view of [...VIEWS.filter((each) => found.includes(each)), ...found.filter((each) => !VIEWS.includes(each))]) {
         const info = await stat(path.join(views, `${view}.png`)).catch(() => null);
         if (info && info.isFile() && info.mtimeMs >= started) images.push(view);
       }
@@ -355,7 +358,7 @@ export function createPlans(config, { looks, run = spawn }) {
     if (parts[0] === 'plan-views' && req.method === 'GET') {
       // Only a view of the last build, by its fixed name: the folder comes from that build, not from the request.
       const view = parts.length === 2 && parts[1].endsWith('.png') ? parts[1].slice(0, -4) : '';
-      if (!build.last || !VIEWS.includes(view) || !build.last.images.includes(view)) return send(res, 404, { ok: false, error: 'not found' }), true;
+      if (!build.last || !VIEW_NAME.test(view) || !build.last.images.includes(view)) return send(res, 404, { ok: false, error: 'not found' }), true;
       return serveFile(res, path.join(build.last.dir, `${view}.png`)), true;
     }
     if (parts[0] !== 'api' || parts[1] !== 'plans') return false;
