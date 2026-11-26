@@ -9,6 +9,7 @@ import { spawn } from 'node:child_process';
 import { timingSafeEqual } from 'node:crypto';
 import { createBiomes } from './biomes.mjs';
 import { createKits } from './kits.mjs';
+import { createPlans } from './plans.mjs';
 
 const here = path.dirname(fileURLToPath(import.meta.url));
 const config = {
@@ -22,7 +23,11 @@ config.catalog = path.join(config.project, 'Saved', 'Catalog', 'catalog.json');
 config.thumbs = path.join(config.project, 'Saved', 'Catalog', 'thumbs');
 config.roles = path.join(config.project, 'Config', 'Assets', 'roles.json');
 
+// Whatever is running Unreal now (a refresh, a biome preview, a plan build): one run at a time on this machine.
+config.unreal = { running: null };
+
 const biomes = createBiomes(config);
+const plans = createPlans(config, { looks: biomes.looks });
 const kits = createKits(config, here);
 
 const isLoopback =['127.0.0.1', 'localhost', '::1'].includes(config.host);
@@ -157,7 +162,9 @@ async function setRoles(body) {
 const refresh = { running: false, last: null };
 function startRefresh() {
   if (refresh.running) return { ok: false, code: 'busy', error: 'A refresh is already running.' };
+  if (config.unreal.running) return { ok: false, code: 'busy', error: `Unreal is busy (${config.unreal.running}). One run at a time.` };
   refresh.running = true;
+  config.unreal.running = 'refreshing the catalogue';
   const started = Date.now();
   const lines = [];
   const child = spawn(config.editor, [path.join(config.project, 'WhisperingWorlds.uproject'), '-run=WWExportCatalog', '-unattended', '-nosplash', '-stdout'], { windowsHide: true });
@@ -170,6 +177,7 @@ function startRefresh() {
   child.stderr.on('data', collect);
   const finish = (exit, error) => {
     refresh.running = false;
+    config.unreal.running = null;
     refresh.last = { ok: exit === 0 && lines.some((line) => line.includes('probe verdict wwCatalog pass')), exit, error, seconds: (Date.now() - started) / 1000, lines, finished: new Date().toISOString() };
   };
   child.on('error', (error) => finish(null, error.message));
@@ -196,9 +204,10 @@ const server = http.createServer(async (req, res) => {
     if (url.pathname.startsWith('/api/') || url.pathname.startsWith('/thumbs/')) {
       if (!authorised(req)) return send(res, 401, { ok: false, code: 'unauthorized', error: 'Bearer token required.' });
     }
-    if (url.pathname.startsWith('/previews/') && !authorised(req)) return send(res, 401, { ok: false, code: 'unauthorized', error: 'Bearer token required.' });
+    if ((url.pathname.startsWith('/previews/') || url.pathname.startsWith('/plan-views/')) && !authorised(req)) return send(res, 401, { ok: false, code: 'unauthorized', error: 'Bearer token required.' });
     if (await biomes(req, res, url, send, readBody, serveFile)) return;
     if (await kits(req, res, url, send)) return;
+    if (await plans(req, res, url, send, readBody, serveFile)) return;
     if (route === 'GET /api/catalog') return send(res, 200, await catalogue());
     if (route === 'PUT /api/assets/role') return send(res, 200, await setRoles(await readBody(req)));
     if (route === 'POST /api/catalog/refresh') {
@@ -219,7 +228,7 @@ const server = http.createServer(async (req, res) => {
     }
     send(res, 404, { ok: false, error: 'not found' });
   } catch (error) {
-    send(res, error.status || 500, { ok: false, error: error.message });
+    send(res, error.status || 500, { ok: false, error: error.message, code: typeof error.status === 'number' ? error.code : undefined, details: error.details });
   }
 });
 

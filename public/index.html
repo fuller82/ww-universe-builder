@@ -13,7 +13,7 @@
       <button class="section current" type="button" data-section="assets">Assets</button>
       <button class="section" type="button" data-section="biomes">Biomes</button>
       <button class="section" type="button" data-section="kits">Kits</button>
-      <button class="section" type="button" disabled title="Not built yet">Biome drawer</button>
+      <button class="section" type="button" data-section="drawer">Biome drawer</button>
       <button class="section" type="button" disabled title="Not built yet">World</button>
     </nav>
     <div class="top-right">
@@ -117,9 +117,68 @@
     <div id="kits-list" class="kits-list"></div>
   </main>
 
+  <main id="section-drawer" class="drawer-page" hidden>
+    <aside class="filters drawer-side">
+      <label>Plan
+        <select id="plan"></select>
+      </label>
+      <div class="row wrap">
+        <button id="plan-save" type="button" class="good" disabled>Save</button>
+        <button id="plan-revert" type="button" disabled>Revert</button>
+        <button id="plan-new" type="button" disabled>New plan…</button>
+      </div>
+      <div class="row wrap">
+        <button id="plan-undo" type="button" disabled>Undo</button>
+        <button id="plan-redo" type="button" disabled>Redo</button>
+      </div>
+      <div id="plan-state" class="muted small"></div>
+      <div id="plan-problems" class="problems" hidden></div>
+      <div class="fields"><div class="group">Draw new</div></div>
+      <div id="plan-tools" class="tools"></div>
+      <div id="plan-features" class="features fields"></div>
+      <details id="plan-details">
+        <summary>Plan settings (ground, edges, sea)</summary>
+        <div id="plan-props" class="fields"></div>
+      </details>
+    </aside>
+
+    <section class="drawer-canvas">
+      <div id="plan-message" class="message" hidden></div>
+      <div class="canvas-wrap">
+        <svg id="plan-svg" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="The biome plan, in metres: x right, y down"></svg>
+        <div id="plan-hint" class="canvas-hint" hidden></div>
+        <div class="canvas-buttons">
+          <button id="plan-zoom-in" type="button" title="Zoom in">+</button>
+          <button id="plan-zoom-out" type="button" title="Zoom out">&minus;</button>
+          <button id="plan-fit" type="button" title="Show the whole biome">Fit</button>
+        </div>
+      </div>
+    </section>
+
+    <aside class="drawer-panel">
+      <h2 class="heading">Selected</h2>
+      <div id="plan-selected" class="fields"></div>
+
+      <h2 class="heading">Build</h2>
+      <div class="actions static">
+        <label class="inline">Look
+          <select id="plan-look"></select>
+        </label>
+        <button id="plan-build" type="button" disabled>Build and render in Unreal</button>
+      </div>
+      <div id="plan-build-state" class="muted small"></div>
+      <p class="muted small">A build makes the ground from the saved plan, dresses it from the plan's biome palette and renders the views the build suggests. It uses the graphics card; one Unreal run at a time. The verdict is Unreal's, not this page's.</p>
+      <pre id="plan-verdicts" class="lines" hidden></pre>
+      <pre id="plan-guide" class="lines" hidden></pre>
+      <div id="plan-images" class="previews plan-images"></div>
+      <pre id="plan-lines" class="lines" hidden></pre>
+    </aside>
+  </main>
+
   <script src="auth.js"></script>
   <script type="module" src="app.js"></script>
   <script type="module" src="biomes.js"></script>
   <script type="module" src="kits.js"></script>
+  <script type="module" src="plans.js"></script>
 </body>
 </html>

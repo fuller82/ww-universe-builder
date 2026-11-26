@@ -103,12 +103,14 @@ export function createBiomes(config) {
   async function startPreview(id, look) {
     fileOf(id);
     if (preview.running) throw fail(409, 'A preview is already rendering.');
+    if (config.unreal?.running) throw fail(409, `Unreal is busy (${config.unreal.running}). One run at a time.`);
     if (!(await looks()).some((each) => each.id === look)) throw fail(422, `no such look: ${look}`);
     const started = Date.now();
     const lines = [];
     const args = ['-NoProfile', '-ExecutionPolicy', 'Bypass', '-File', script, '-Pack', `biome:${id}`, '-Look', look, '-Run', 'ub', '-Views', `${VIEWS['eye-b']};${VIEWS.low};${VIEWS.overview}`];
     const child = spawn('powershell.exe', args, { windowsHide: true });
     preview.running = { id, look, started: new Date(started).toISOString() };
+    if (config.unreal) config.unreal.running = `previewing biome ${id}`;
     const collect = (chunk) => {
       for (const line of chunk.toString('utf8').split(/\r?\n/)) if (/probe |build |views /.test(line)) lines.push(line.trim().slice(0, 400));
     };
@@ -124,6 +126,7 @@ export function createBiomes(config) {
       const views = lines.some((line) => line.includes('probe verdict wwViews pass'));
       preview.last = { id, look, ok: world && views && images.length > 0, exit, error, seconds: (Date.now() - started) / 1000, worldVerdict: world, viewsVerdict: views, images, lines, finished: new Date().toISOString() };
       preview.running = null;
+      if (config.unreal) config.unreal.running = null;
     };
     child.on('error', (error) => finish(null, error.message));
     child.on('close', (exit) => finish(exit, null));
@@ -131,7 +134,9 @@ export function createBiomes(config) {
   }
 
   // Returns true when the request was one of ours.
-  return async function handle(req, res, url, send, readBody, serveFile) {
+  handle.looks = looks;
+  return handle;
+  async function handle(req, res, url, send, readBody, serveFile) {
     const parts = url.pathname.split('/').filter(Boolean);
     if (parts[0] === 'previews' && req.method === 'GET') {
       const [, id, look, name] = parts;
@@ -150,5 +155,5 @@ export function createBiomes(config) {
     if (parts.length === 4 && parts[3] === 'check' && req.method === 'POST') return send(res, 200, { ok: true, problems: await validate(id, (await readBody(req)).document) }), true;
     if (parts.length === 4 && parts[3] === 'preview' && req.method === 'POST') return send(res, 202, await startPreview(id, `${(await readBody(req)).look || ''}`)), true;
     return false;
-  };
+  }
 }
